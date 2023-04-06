@@ -1,0 +1,23 @@
+{
+  "name": "grafico",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexShopiak/Grafico.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexShopiak/Grafico/issues"
+  },
+  "homepage": "https://github.com/AlexShopiak/Grafico#readme",
+  "dependencies": {
+    "jest": "^29.5.0"
+  }
+}
