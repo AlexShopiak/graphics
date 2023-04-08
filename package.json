@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/AlexShopiak/Grafico#readme",
   "dependencies": {
-    "jest": "^29.5.0"
+    "jest": "^29.5.0",
+    "prompt-sync": "^4.2.0"
   }
 }
