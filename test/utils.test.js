@@ -1,6 +1,6 @@
 'use strict'
 
-const {validateExpr, validateValue, searchVariable} = require('./lib/utils.js');
+const {validateExpr, validateValue, searchVariable} = require('../lib/utils.js');
 
 test('expression validator', () => {
     let status = validateExpr('x+3+4*5-6');
