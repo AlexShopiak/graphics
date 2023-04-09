@@ -3,7 +3,7 @@ const prompt = require('prompt-sync')();
 const {validateExpr, validateValue, searchVariable} = require('./lib/utils.js');
 const {parseAndCompute} = require('./lib/parser/parser.js');
 
-const main = async () => {
+const main = () => {
     let expr;
     while (1) {
       expr = prompt("Enter expression: ");
