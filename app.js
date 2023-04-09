@@ -17,7 +17,7 @@ const main = () => {
       let value;
       while (1) {
         value = prompt("Enter value: ");
-        const status = validateValue(expr);
+        const status = validateValue(value);
         if (status == 'valid') break;
         console.log(status);
       }
