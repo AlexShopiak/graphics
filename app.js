@@ -1,6 +1,6 @@
 'use strict'
 const prompt = require('prompt-sync')();
-const {validateExpr, validateValue, exprIsAlgebraic} = require('./lib/utils.js');
+const {validateExpr, validateValue, searchVariable} = require('./lib/utils.js');
 const {parseAndCompute} = require('./lib/parser/parser.js');
 
 const main = async () => {
@@ -12,15 +12,15 @@ const main = async () => {
       console.log(status);
     }
     
-    if (exprIsAlgebraic(expr)) {
+    const variable = searchVariable(expr);
+    if (variable != 'null') {
       let value;
       while (1) {
         value = prompt("Enter value: ");
         const status = validateValue(expr);
-      if (status == 'valid') break;
-      console.log(status);
+        if (status == 'valid') break;
+        console.log(status);
       }
-      const variable = "x"; //todo
       expr = expr.replaceAll(variable, value);
     }
   
