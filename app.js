@@ -7,6 +7,7 @@ const main = () => {
     let expr;
     while (1) {
       expr = prompt("Enter expression: ");
+      expr = expr.replaceAll(" ","");
       const status = validateExpr(expr);
       if (status == 'valid') break;
       console.log(status);
