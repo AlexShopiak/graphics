@@ -11,6 +11,7 @@ const main = () => {
   let expr;
   while (1) {
     expr = prompt("Enter expression: ");
+    if (expr == 'quit') process.exit(0);
     expr = v.normaliseExpr(expr);
     const status = v.validateExpr(expr);
     if (status == 'valid') break;
@@ -23,6 +24,7 @@ const main = () => {
     let value;
     while (1) {
       value = prompt("Enter value: ");
+      if (value == 'quit') process.exit(0);
       const status = v.validateValue(value);
       if (status == 'valid') break;
       console.log(status);
