@@ -1,6 +1,6 @@
 'use strict'
 const prompt = require('prompt-sync')();
-const {Validator} = require('./lib/validator.js');
+const {Validator} = require('./lib/utils/validator.js');
 const {Parser} = require('./lib/parser/parser.js');
 
 const v = new Validator;
@@ -11,20 +11,22 @@ const main = () => {
   let expr;
   while (1) {
     expr = prompt("Enter expression: ");
-    if (expr == 'quit') process.exit(0);
+    if (expr == 'q') process.exit(0);
+
     expr = v.normaliseExpr(expr);
     const status = v.validateExpr(expr);
     if (status == 'valid') break;
     console.log(status);
   }
   
-  //Ask for values
+  //Replace vars with asked value
   const variable = v.searchVariable(expr);
   if (variable != 'null') {
     let value;
     while (1) {
       value = prompt("Enter value: ");
-      if (value == 'quit') process.exit(0);
+      if (value == 'q') process.exit(0);
+
       const status = v.validateValue(value);
       if (status == 'valid') break;
       console.log(status);
@@ -32,7 +34,7 @@ const main = () => {
     expr = expr.replaceAll(variable, value);
   }
   
-  //Parse
+  //Parse expr without vars
   const result = p.parseAndCompute(expr);
   console.log(result);
 }
