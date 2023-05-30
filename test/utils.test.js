@@ -3,6 +3,17 @@
 const {Validator} = require('../lib/utils/validator.js');
 const v = new Validator;
 
+test('expression normaliser', () => {
+    let expr = v.normaliseExpr('x + 3+  4* 5-6');
+    expect(expr).toEqual('x+3+4*5-6');
+
+    expr = v.normaliseExpr('-x+3');
+    expect(expr).toEqual('0-x+3');
+
+    expr = v.normaliseExpr('+x+3');
+    expect(expr).toEqual('x+3');
+})
+
 test('expression validator', () => {
     let status = v.validateExpr('x+3+4*5-6');
     expect(status).toEqual('valid');
@@ -21,6 +32,24 @@ test('expression validator', () => {
 
     status = v.validateExpr('+');
     expect(status).toEqual('error-msg');
+
+    status = v.validateExpr('y*6*x/4+x');
+    expect(status).toEqual('error-msg');
+
+    status = v.validateExpr('y*6*y/4+z');
+    expect(status).toEqual('error-msg');
+
+    status = v.validateExpr('y*6*y/4+y');
+    expect(status).toEqual('error-msg');
+})
+
+
+test('value normaliser', () => {
+    let value = v.normaliseValue('  35 ');
+    expect(value).toEqual('35');
+
+    value = v.normaliseValue('+35');
+    expect(value).toEqual('35');
 })
 
 test('value validator', () => {
@@ -29,6 +58,9 @@ test('value validator', () => {
 
     status = v.validateValue('-0.45');
     expect(status).toEqual('valid');
+
+    status = v.validateValue('-0,45');
+    expect(status).toEqual('error-msg');
 
     status = v.validateValue('a');
     expect(status).toEqual('error-msg');
@@ -43,19 +75,13 @@ test('value validator', () => {
     expect(status).toEqual('error-msg');
 })
 
-test('variable searcher', () => {
-    let variable = v.searchVariable('x+5-6');
-    expect(variable).toEqual('x');
+test('variable has-er', () => {
+    let status = v.hasVariable('3+x+5')
+    expect(status).toEqual(true);
 
-    variable = v.searchVariable('5-y');
-    expect(variable).toEqual('y');
+    status = v.hasVariable('3+y+5')
+    expect(status).toEqual(false);
 
-    variable = v.searchVariable('a*4');
-    expect(variable).toEqual('a');
-
-    variable = v.searchVariable('45/32-4');
-    expect(variable).toEqual('null');
-
-    variable = v.searchVariable('4-45*85');
-    expect(variable).toEqual('null');
+    status = v.hasVariable('3+5')
+    expect(status).toEqual(false);
 })
