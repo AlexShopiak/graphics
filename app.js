@@ -7,34 +7,31 @@ const v = new Validator;
 const p = new Parser;
 
 const main = () => {
-  //Ask for expression
   let expr;
   while (1) {
     expr = prompt("Enter expression: ");
+    expr = v.normaliseExpr(expr);
     if (expr == 'q') process.exit(0);
 
-    expr = v.normaliseExpr(expr);
     const status = v.validateExpr(expr);
     if (status == 'valid') break;
     console.log(status);
   }
-  
-  //Replace vars with asked value
-  const variable = v.searchVariable(expr);
-  if (variable != 'null') {
+
+  if (v.hasVariable(expr)) {
     let value;
     while (1) {
       value = prompt("Enter value: ");
+      value = v.normaliseValue(value);
       if (value == 'q') process.exit(0);
 
       const status = v.validateValue(value);
       if (status == 'valid') break;
       console.log(status);
     }
-    expr = expr.replaceAll(variable, value);
+    expr = expr.replaceAll('x', value);
   }
   
-  //Parse expr without vars
   const result = p.parseAndCompute(expr);
   console.log(result);
 }
