@@ -1,60 +1,61 @@
 'use strict'
 
-const {validateExpr, validateValue, searchVariable} = require('../lib/utils.js');
+const {Validator} = require('../lib/utils/validator.js');
+const v = new Validator;
 
 test('expression validator', () => {
-    let status = validateExpr('x+3+4*5-6');
+    let status = v.validateExpr('x+3+4*5-6');
     expect(status).toEqual('valid');
 
-    status = validateExpr('x*6*x/4+x');
+    status = v.validateExpr('x*6*x/4+x');
     expect(status).toEqual('valid');
 
-    status = validateExpr('4+5');
+    status = v.validateExpr('4+5');
     expect(status).toEqual('valid');
 
-    status = validateExpr('x--x');
+    status = v.validateExpr('x--x');
     expect(status).toEqual('error-msg');
 
-    status = validateExpr('*-x*');
+    status = v.validateExpr('*-x*');
     expect(status).toEqual('error-msg');
 
-    status = validateExpr('+');
+    status = v.validateExpr('+');
     expect(status).toEqual('error-msg');
 })
 
 test('value validator', () => {
-    let status = validateValue('6');
+    let status = v.validateValue('6');
     expect(status).toEqual('valid');
 
-    status = validateValue('-0.45');
+    status = v.validateValue('-0.45');
     expect(status).toEqual('valid');
 
-    status = validateValue('a');
+    status = v.validateValue('a');
     expect(status).toEqual('error-msg');
 
-    status = validateValue('1-56');
+    status = v.validateValue('1-56');
     expect(status).toEqual('error-msg');
 
-    status = validateValue('4r');
+    status = v.validateValue('4r');
     expect(status).toEqual('error-msg');
 
-    status = validateValue('');
+    status = v.validateValue('');
     expect(status).toEqual('error-msg');
 })
 
 test('variable searcher', () => {
-    let variable = searchVariable('x+5-6');
+    let variable = v.searchVariable('x+5-6');
     expect(variable).toEqual('x');
 
-    variable = searchVariable('5-y');
+    variable = v.searchVariable('5-y');
     expect(variable).toEqual('y');
 
-    variable = searchVariable('a*4');
+    variable = v.searchVariable('a*4');
     expect(variable).toEqual('a');
 
-    variable = searchVariable('45/32-4');
+    variable = v.searchVariable('45/32-4');
     expect(variable).toEqual('null');
 
-    variable = searchVariable('4-45*85');
+    variable = v.searchVariable('4-45*85');
     expect(variable).toEqual('null');
 })
