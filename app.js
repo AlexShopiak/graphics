@@ -8,7 +8,7 @@ const p = new Parser;
 
 const main = () => {
   let expr;
-  while (1) {
+  while (true) {
     expr = prompt("Enter expression: ");
     expr = v.normaliseExpr(expr);
     if (expr == 'q') process.exit(0);
