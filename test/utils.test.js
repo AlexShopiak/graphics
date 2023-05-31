@@ -1,60 +1,90 @@
 'use strict'
 
-const {validateExpr, validateValue, searchVariable} = require('../lib/utils.js');
+const {Validator} = require('../lib/utils/validator.js');
+const v = new Validator;
+
+test('expression normaliser', () => {
+    let expr = v.normaliseExpr('x + 3+  4* 5-6');
+    expect(expr).toEqual('x+3+4*5-6');
+
+    expr = v.normaliseExpr('-x+3');
+    expect(expr).toEqual('0-x+3');
+
+    expr = v.normaliseExpr('+x+3');
+    expect(expr).toEqual('x+3');
+})
 
 test('expression validator', () => {
-    let status = validateExpr('x+3+4*5-6');
+    let status = v.validateExpr('x+3+4*5-6');
     expect(status).toEqual('valid');
 
-    status = validateExpr('x*6*x/4+x');
+    status = v.validateExpr('x*6*x/4+x');
     expect(status).toEqual('valid');
 
-    status = validateExpr('4+5');
+    status = v.validateExpr('4+5');
     expect(status).toEqual('valid');
 
-    status = validateExpr('x--x');
+    status = v.validateExpr('x--x');
     expect(status).toEqual('error-msg');
 
-    status = validateExpr('*-x*');
+    status = v.validateExpr('*-x*');
     expect(status).toEqual('error-msg');
 
-    status = validateExpr('+');
+    status = v.validateExpr('+');
     expect(status).toEqual('error-msg');
+
+    status = v.validateExpr('y*6*x/4+x');
+    expect(status).toEqual('error-msg');
+
+    status = v.validateExpr('y*6*y/4+z');
+    expect(status).toEqual('error-msg');
+
+    status = v.validateExpr('y*6*y/4+y');
+    expect(status).toEqual('error-msg');
+    
+    status = v.validateExpr('');
+    expect(status).toEqual('error-msg');
+})
+
+
+test('value normaliser', () => {
+    let value = v.normaliseValue('  35 ');
+    expect(value).toEqual('35');
+
+    value = v.normaliseValue('+35');
+    expect(value).toEqual('35');
 })
 
 test('value validator', () => {
-    let status = validateValue('6');
+    let status = v.validateValue('6');
     expect(status).toEqual('valid');
 
-    status = validateValue('-0.45');
+    status = v.validateValue('-0.45');
     expect(status).toEqual('valid');
 
-    status = validateValue('a');
+    status = v.validateValue('-0,45');
     expect(status).toEqual('error-msg');
 
-    status = validateValue('1-56');
+    status = v.validateValue('a');
     expect(status).toEqual('error-msg');
 
-    status = validateValue('4r');
+    status = v.validateValue('1-56');
     expect(status).toEqual('error-msg');
 
-    status = validateValue('');
+    status = v.validateValue('4r');
+    expect(status).toEqual('error-msg');
+
+    status = v.validateValue('');
     expect(status).toEqual('error-msg');
 })
 
-test('variable searcher', () => {
-    let variable = searchVariable('x+5-6');
-    expect(variable).toEqual('x');
+test('variable has-er', () => {
+    let status = v.hasVariable('3+x+5')
+    expect(status).toEqual(true);
 
-    variable = searchVariable('5-y');
-    expect(variable).toEqual('y');
+    status = v.hasVariable('3+y+5')
+    expect(status).toEqual(false);
 
-    variable = searchVariable('a*4');
-    expect(variable).toEqual('a');
-
-    variable = searchVariable('45/32-4');
-    expect(variable).toEqual('null');
-
-    variable = searchVariable('4-45*85');
-    expect(variable).toEqual('null');
+    status = v.hasVariable('3+5')
+    expect(status).toEqual(false);
 })
