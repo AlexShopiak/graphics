@@ -8,7 +8,7 @@ const c = new Compiler;
 
 const askExpr = () => {
   let expr;
-  while (1) {
+  while (true) {
     expr = prompt("Enter expression: ");
     expr = v.normaliseExpr(expr);
 

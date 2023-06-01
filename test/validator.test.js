@@ -41,6 +41,9 @@ test('expression validator', () => {
 
     status = v.validateExpr('y * 6 * y / 4 + y');
     expect(status).toEqual('error-msg');
+    
+    status = v.validateExpr('');
+    expect(status).toEqual('error-msg');
 })
 
 
