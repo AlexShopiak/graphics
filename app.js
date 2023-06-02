@@ -23,7 +23,7 @@ const askExpr = () => {
 
 const askValue = () => {
   let value;
-  while (1) {
+  while (true) {
     value = prompt("Enter value: ");
     value = v.normaliseValue(value);
 
