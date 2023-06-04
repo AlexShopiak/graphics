@@ -39,18 +39,26 @@ const askValue = () => {
   return value;
 }
 
+const quit = () => {
+  p.printYellow("=========|See you|==========");
+  p.printYellow("============================");
+  process.exit(0);
+}
+
 const main = () => {
   let value = 0;
   let expr = askExpr();
-  if (expr == CODE_QUIT) process.exit(0);
+  if (expr == CODE_QUIT) quit();
   c.compile(expr);
 
   if (expr.includes('x')) {
     while (1) {
       value = askValue();
-      if (value == CODE_QUIT) process.exit(0);
-      if (value == CODE_EXPR) break;
-
+      if (value == CODE_QUIT) quit();
+      if (value == CODE_EXPR) {
+        p.print("")
+        break;
+      }
       const result = c.compute({x:Number(value)});
       p.printResult(result);
     }
@@ -61,7 +69,8 @@ const main = () => {
   p.printResult(result);
 }
 
-p.printYellow("Welcome to Grafico App");
+p.printYellow("==|Welcome to Grafico App|==");
+p.printYellow("============================");
 p.print("");
 while (true) {
   main();
