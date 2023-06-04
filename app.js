@@ -6,6 +6,7 @@ const {Printer} = require('./lib/utils/printer.js');
 
 const CODE_QUIT = 'q';
 const CODE_EXPR = 'e';
+const devMode = 0;
 
 const v = new Validator;
 const c = new Compiler;
@@ -39,7 +40,15 @@ const askValue = () => {
   return value;
 }
 
+const greet = () => {
+  if (devMode) return;
+  p.printYellow("==|Welcome to Grafico App|==");
+  p.printYellow("============================");
+  p.print("");
+}
+
 const quit = () => {
+  if (devMode) process.exit(0);
   p.printYellow("=========|See you|==========");
   p.printYellow("============================");
   process.exit(0);
@@ -69,9 +78,7 @@ const main = () => {
   p.printResult(result);
 }
 
-p.printYellow("==|Welcome to Grafico App|==");
-p.printYellow("============================");
-p.print("");
+greet()
 while (true) {
   main();
 }
