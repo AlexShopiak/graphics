@@ -2,12 +2,14 @@
 const prompt = require('prompt-sync')();
 const {Validator} = require('./lib/utils/validator.js');
 const {Compiler} = require('./lib/compiler/compiler.js');
+const {Printer} = require('./lib/utils/printer.js');
 
 const CODE_QUIT = 'q';
 const CODE_EXPR = 'e';
 
 const v = new Validator;
 const c = new Compiler;
+const p = new Printer;
 
 const askExpr = () => {
   let expr;
@@ -18,8 +20,7 @@ const askExpr = () => {
     if (expr == CODE_QUIT) break;
     const status = v.validateExpr(expr);
     if (status == 'valid') break;
-
-    console.log("Error: ", status);
+    p.printError(status)
   }
   return expr;
 }
@@ -33,8 +34,7 @@ const askValue = () => {
     if (value == CODE_QUIT|| value == CODE_EXPR) break;
     const status = v.validateValue(value);
     if (status == 'valid') break;
-
-    console.log("Error: ", status);
+    p.printError(status)
   }
   return value;
 }
@@ -52,16 +52,17 @@ const main = () => {
       if (value == CODE_EXPR) break;
 
       const result = c.compute({x:Number(value)});
-      console.log("Result: ", result);
+      p.printResult(result);
     }
     return;
   }
 
   const result = c.compute({x:Number(value)});
-  console.log("Result: ", result);
+  p.printResult(result);
 }
 
-console.log("Welcome to Grafico App");
-while (1) {
+p.printYellow("Welcome to Grafico App");
+p.print("");
+while (true) {
   main();
 }
