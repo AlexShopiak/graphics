@@ -6,22 +6,41 @@ const {Printer} = require('./lib/utils/printer.js');
 
 const CODE_QUIT = 'q';
 const CODE_EXPR = 'e';
-const devMode = 0;
 
 const v = new Validator;
 const c = new Compiler;
 const p = new Printer;
+
+const greet = () => {
+  p.printYellow("==|Welcome to Grafico App|==");
+  p.printYellow("============================");
+  p.print("");
+}
+
+const quit = () => {
+  c.saveHistory();
+  p.print("");
+  p.printYellow("=========|See you|==========");
+  p.printYellow("============================");
+  process.exit(0);
+}
 
 const askExpr = () => {
   let expr;
   while (true) {
     expr = prompt("Enter expression: ");
     expr = v.normaliseExpr(expr);
-
     if (expr == CODE_QUIT) break;
-    const status = v.validateExpr(expr);
-    if (status == 'valid') break;
-    p.printError(status)
+
+    try {
+      c.compile(expr);
+      c.compute(1);
+    } catch (err) {
+      err.name = '';
+      p.printError(err.toString());
+      continue;
+    }
+    break;
   }
   return expr;
 }
@@ -40,20 +59,6 @@ const askValue = () => {
   return value;
 }
 
-const greet = () => {
-  if (devMode) return;
-  p.printYellow("==|Welcome to Grafico App|==");
-  p.printYellow("============================");
-  p.print("");
-}
-
-const quit = () => {
-  if (devMode) process.exit(0);
-  p.printYellow("=========|See you|==========");
-  p.printYellow("============================");
-  process.exit(0);
-}
-
 const main = () => {
   let value = 0;
   let expr = askExpr();
@@ -68,13 +73,13 @@ const main = () => {
         p.print("")
         break;
       }
-      const result = c.compute({x:Number(value)});
+      const result = c.compute(Number(value));
       p.printResult(result);
     }
     return;
   }
 
-  const result = c.compute({x:Number(value)});
+  const result = c.compute(Number(value));
   p.printResult(result);
 }
 
