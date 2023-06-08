@@ -7,9 +7,9 @@
 3. Compute stored expression with your values  
    If your expression has no vars, all values will be ignored  
 <code>res1 = c.compute(4)</code>   
-<code>res1 = c.compute(4)</code>   
-<code>res1 = c.compute(4)</code>  
-4. Save your history(oprionaly)  
+<code>res2 = c.compute(5)</code>   
+<code>res3 = c.compute(78)</code>  
+4. Save your history(optionaly)  
 <code>c.saveHistory();</code>
 
 ## How Compiler works

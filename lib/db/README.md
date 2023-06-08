@@ -3,8 +3,8 @@
 <code>const db = new DataBase()</code>
 2. Start DataBase. It will download data from storage to your local cache   
 <code>db.start()</code>
-3. Read or Write to DataBase
-read returns faulse if storage doesnt have your request  
+3. Read or Write to DataBase  
+read returns faulse if storage haven't your request  
 <code>db.read('x+35')</code>   
 <code>db.write('3*4', 12)</code>
 4. Stop DataBase. It will load all you curent history to storage  
