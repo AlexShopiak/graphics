@@ -1,1 +1,1 @@
-{"af":898}
+{"af":898,"sqrt(x)":{"type":"call","fn":"sqrt","args":[{"type":"ident","value":"x"}]},"abs(x)":{"type":"call","fn":"abs","args":[{"type":"ident","value":"x"}]}}
