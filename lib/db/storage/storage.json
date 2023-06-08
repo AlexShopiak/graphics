@@ -1,1 +1,1 @@
-{"af":898}
+{"x + 4":{"type":"binary","left":{"type":"ident","value":"x"},"op":"+","right":{"type":"number","value":"4"}}}
