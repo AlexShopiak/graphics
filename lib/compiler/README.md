@@ -1,24 +1,16 @@
 ## How to use a Compiler
 1. Create a compiler. It's an environment you'll work in  
-<code>
-const c = new Compiler  
-</code>
+<code>const c = new Compiler()</code>
 2. Compile an expression you will compute. You can recompile it. The last will be stored    
-<code>
-c.compile('x+5')  
-c.compile('x+6')  
-</code>
+<code>c.compile('x+5')</code>  
+<code>c.compile('x+6')</code>  
 3. Compute stored expression with your values  
-   If your expression has no vars, all values will be ignored
-<code>
-res1 = c.compute(4)  
-res2 = c.compute(5)  
-res3 = c.compute(6)  
-</code>
-4. Save your history(oprionaly)
-<code>
-c.saveHistory();   
-</code>
+   If your expression has no vars, all values will be ignored  
+<code>res1 = c.compute(4)</code>   
+<code>res2 = c.compute(5)</code>   
+<code>res3 = c.compute(78)</code>  
+4. Save your history(optionaly)  
+<code>c.saveHistory();</code>
 
 ## How Compiler works
 1. Reads your expression

@@ -63,17 +63,17 @@ test('value validator', () => {
     expect(status).toEqual('valid');
 
     status = v.validateValue('-0,45');
-    expect(status).toEqual('error-msg');
+    expect(status).toEqual('Invalid value');
 
     status = v.validateValue('a');
-    expect(status).toEqual('error-msg');
+    expect(status).toEqual('Invalid value');
 
     status = v.validateValue('1-56');
-    expect(status).toEqual('error-msg');
+    expect(status).toEqual('Invalid value');
 
     status = v.validateValue('4r');
-    expect(status).toEqual('error-msg');
+    expect(status).toEqual('Invalid value');
 
     status = v.validateValue('');
-    expect(status).toEqual('error-msg');
+    expect(status).toEqual('Invalid value');
 })
