@@ -1,4 +1,8 @@
 'use strict'
+
+//=============CONSTANTS=====================
+//===========================================
+
 const prompt = require('prompt-sync')();
 const {Validator} = require('./lib/utils/validator.js');
 const {Compiler} = require('./lib/compiler/compiler.js');
@@ -10,6 +14,9 @@ const CODE_EXPR = 'e';
 const v = new Validator;
 const c = new Compiler;
 const p = new Printer;
+
+//=============FUNCTIONS=====================
+//===========================================
 
 const greet = () => {
   p.printYellow("==|Welcome to Grafico App|==");
@@ -59,6 +66,8 @@ const askValue = () => {
   return value;
 }
 
+//=============USAGE==========================
+//============================================
 const main = () => {
   let value = 0;
   let expr = askExpr();
